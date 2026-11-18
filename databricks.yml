@@ -1,0 +1,28 @@
+bundle:
+  name: orders-pipeline
+
+variables:
+  schema:
+    description: Схема для таблиць pipeline у цьому середовищі
+    default: orders_dev
+
+resources:
+  jobs:
+    unit_tests:
+      name: orders-unit-tests
+      tasks:
+        - task_key: run_tests
+          notebook_task:
+            notebook_path: ./notebooks/run_tests.ipynb
+
+targets:
+  dev:
+    mode: development
+    default: true
+    variables:
+      schema: orders_dev
+
+  prod:
+    mode: production
+    variables:
+      schema: orders_prod
